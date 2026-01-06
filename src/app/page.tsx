@@ -11,7 +11,7 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 export default function Home() {
   return (
     <>
-      {/* Force update */}
+      {/* BYBE Studio - Last updated: 2026-01-07 */}
       <Navbar />
       <main>
         <Hero />
