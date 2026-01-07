@@ -219,6 +219,11 @@ body {
   }
 }
 
+.animate-shimmerText {
+  animation: shimmerText 4s ease-in-out infinite;
+  will-change: background-position;
+}
+
 @keyframes glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(196, 163, 90, 0.3);
@@ -440,6 +445,16 @@ body {
   border-radius: 50%;
   opacity: 0.3;
   animation: float-random 10s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Disable particle animations on mobile for better performance */
+@media (max-width: 768px) {
+  .particle {
+    animation: none;
+    opacity: 0.2;
+  }
 }
 
 .hero-content {

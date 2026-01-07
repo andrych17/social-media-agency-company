@@ -6,12 +6,26 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Hero() {
   const particlesRef = useRef<HTMLDivElement>(null);
   const [currentTagline, setCurrentTagline] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   
   const taglines = [
     "Transforming Brands into Digital Experiences",
     "Elevate Your Story, Amplify Your Impact", 
     "Where Creativity Meets Strategic Innovation"
   ];
+
+  useEffect(() => {
+    // Check if mobile
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mobileQuery.matches);
+    
+    const handleMobileChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
+    };
+    mobileQuery.addEventListener("change", handleMobileChange);
+    
+    return () => mobileQuery.removeEventListener("change", handleMobileChange);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,27 +36,30 @@ export default function Hero() {
   }, [taglines.length]);
 
   useEffect(() => {
-    if (particlesRef.current) {
-      const particles = particlesRef.current;
-      particles.innerHTML = ''; 
+    // Skip particles on mobile for better performance
+    if (isMobile || !particlesRef.current) return;
+    
+    const particles = particlesRef.current;
+    particles.innerHTML = ''; 
+    
+    // Reduced particle count from 50 to 20 for better performance
+    const particleCount = 20;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      const size = 2 + Math.random() * 2;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
       
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement("div");
-        particle.className = "particle";
-        // Random size for depth
-        const size = 2 + Math.random() * 3;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        particle.style.animationDelay = `${Math.random() * 8}s`;
-        particle.style.animationDuration = `${6 + Math.random() * 4}s`;
-        particle.style.opacity = `${0.1 + Math.random() * 0.4}`;
-        particles.appendChild(particle);
-      }
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 6}s`;
+      particle.style.animationDuration = `${8 + Math.random() * 4}s`;
+      particle.style.opacity = `${0.15 + Math.random() * 0.3}`;
+      particles.appendChild(particle);
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <section 
