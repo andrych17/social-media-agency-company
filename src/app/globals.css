@@ -1244,3 +1244,46 @@ a.detail-value:hover {
     padding: 2rem;
   }
 }
+
+/* Floating Action Buttons */
+.whatsapp-float,
+.instagram-float {
+  position: fixed;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  z-index: 999;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsapp-float {
+  bottom: 2rem;
+}
+
+.instagram-float {
+  bottom: 8rem; /* Increased gap - more comfortable spacing */
+}
+
+.whatsapp-float:hover,
+.instagram-float:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile responsiveness for floating buttons */
+@media (max-width: 768px) {
+  .whatsapp-float,
+  .instagram-float {
+    width: 56px;
+    height: 56px;
+    right: 1.5rem;
+  }
+
+  .whatsapp-float {
+    bottom: 1.5rem;
+  }
+
+  .instagram-float {
+    bottom: 6.5rem; /* More spacing on mobile too */
+  }
+}
